@@ -5,12 +5,35 @@ DNA_BASES = frozenset("ACGT")
 
 def clean_sequence(raw: str) -> str:
     """Upper-case raw text and drop spaces, digits and newlines."""
-    raise NotImplementedError("TODO: implement clean_sequence")
+    return raw.strip().upper().replace(" ","")
+        
 
 
 def is_valid_dna(seq: str, allow_n: bool = False) -> bool:
     """True for a non-empty string of A, C, G, T (and N when allowed)."""
-    raise NotImplementedError("TODO: implement is_valid_dna")
+    allowed = set("")
+    
+    if seq == "":
+        return False
+    if allow_n:
+        allowed = set("ACGTN")
+    else:
+        allowed = set("ACGT")
+    if set(seq) <= allowed:
+        return True
+    else:
+        raise ValueError("String contains unidentified character(s)")
+
+"""
+if allow_n
+    if let A C G T N / only consist allowed leter
+        return true
+    else
+        raises ValueError
+if !allow_n
+    if let A C G T N / only consist allowed leter
+        return true
+    else raises ValueError"""
 
 
 def gc_content(seq: str) -> float:
