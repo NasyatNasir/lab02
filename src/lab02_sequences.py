@@ -38,7 +38,10 @@ if !allow_n
 
 def gc_content(seq: str) -> float:
     """Return GC percentage (0-100); ValueError if empty or not A/C/G/T."""
-    raise NotImplementedError("TODO: implement gc_content")
+    clean_sequence(seq)
+    if not is_valid_dna(seq):
+        raise ValueError("Invalid input")
+    return ((seq.count("G") + seq.count("C")) / len(seq)) * 100
 
 
 def transcribe(dna: str) -> str:
