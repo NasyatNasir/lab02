@@ -40,7 +40,10 @@ def transcribe(dna: str) -> str:
 
 def find_motif(seq: str, motif: str) -> list[int]:
     """Return every 0-based start of motif in seq (overlaps allowed)."""
-    is_valid_dna(seq)
+    clean_sequence(seq)
+    clean_sequence(motif)
+    if not is_valid_dna(motif) and is_valid_dna(seq):
+        raise ValueError("Invalid motif")
     patern = []
     start = seq.find(motif)
     while start != -1:
