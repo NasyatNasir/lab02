@@ -1,5 +1,5 @@
 """Lab 2 - biological sequences as strings (becomes sequence_utils.py in Week 5)."""
-
+import re
 DNA_BASES = frozenset("ACGT")
 
 
@@ -12,7 +12,6 @@ def clean_sequence(raw: str) -> str:
 def is_valid_dna(seq: str, allow_n: bool = False) -> bool:
     """True for a non-empty string of A, C, G, T (and N when allowed)."""
     allowed = set("")
-    
     if seq == "":
         return False
     if allow_n:
@@ -23,18 +22,6 @@ def is_valid_dna(seq: str, allow_n: bool = False) -> bool:
         return True
     else:
         raise ValueError("String contains unidentified character(s)")
-
-"""
-if allow_n
-    if let A C G T N / only consist allowed leter
-        return true
-    else
-        raises ValueError
-if !allow_n
-    if let A C G T N / only consist allowed leter
-        return true
-    else raises ValueError"""
-
 
 def gc_content(seq: str) -> float:
     """Return GC percentage (0-100); ValueError if empty or not A/C/G/T."""
@@ -53,4 +40,10 @@ def transcribe(dna: str) -> str:
 
 def find_motif(seq: str, motif: str) -> list[int]:
     """Return every 0-based start of motif in seq (overlaps allowed)."""
-    raise NotImplementedError("TODO: implement find_motif")
+    is_valid_dna(seq)
+    patern = []
+    start = seq.find(motif)
+    while start != -1:
+        patern.append(start)
+        start = seq.find(motif, start+1)
+    return patern
