@@ -1,5 +1,4 @@
 """Lab 2 - biological sequences as strings (becomes sequence_utils.py in Week 5)."""
-import re
 DNA_BASES = frozenset("ACGT")
 
 
@@ -25,28 +24,24 @@ def is_valid_dna(seq: str, allow_n: bool = False) -> bool:
 
 def gc_content(seq: str) -> float:
     """Return GC percentage (0-100); ValueError if empty or not A/C/G/T."""
-    clean_sequence(seq)
-    if not is_valid_dna(seq):
+    if not is_valid_dna(clean_sequence(seq)):
         raise ValueError("Invalid input")
-    return ((seq.count("G") + seq.count("C")) / len(seq)) * 100
+    return ((clean_sequence(seq).count("G") + clean_sequence(seq).count("C")) / len(clean_sequence(seq))) * 100
 
 
 def transcribe(dna: str) -> str:
     """Return the RNA copy of a DNA sequence (T becomes U)."""
-    clean_sequence(dna)
-    is_valid_dna(dna)
-    return dna.replace("T", "U")
+    is_valid_dna(clean_sequence(dna))
+    return clean_sequence(dna).replace("T", "U")
 
 
 def find_motif(seq: str, motif: str) -> list[int]:
     """Return every 0-based start of motif in seq (overlaps allowed)."""
-    clean_sequence(seq)
-    clean_sequence(motif)
-    if not is_valid_dna(motif) and is_valid_dna(seq):
-        raise ValueError("Invalid motif")
+    if not is_valid_dna(clean_sequence(motif)) and is_valid_dna(clean_sequence(seq)):
+        raise ValueError("Invalid clean_sequence(motif)")
     patern = []
-    start = seq.find(motif)
+    start = clean_sequence(seq).find(clean_sequence(motif))
     while start != -1:
         patern.append(start)
-        start = seq.find(motif, start+1)
+        start = clean_sequence(seq).find(clean_sequence(motif), start+1)
     return patern
