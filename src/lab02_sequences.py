@@ -46,7 +46,9 @@ def gc_content(seq: str) -> float:
 
 def transcribe(dna: str) -> str:
     """Return the RNA copy of a DNA sequence (T becomes U)."""
-    raise NotImplementedError("TODO: implement transcribe")
+    clean_sequence(dna)
+    is_valid_dna(dna)
+    return dna.replace("T", "U")
 
 
 def find_motif(seq: str, motif: str) -> list[int]:
